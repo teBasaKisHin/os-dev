@@ -1,8 +1,6 @@
 ; haribote-ipl
 ; TAB=4
 
-CYLS	EQU		10
-
 		ORG		0x7c00			; このプログラムがどこに読み込まれるのか
 
 ; 以下は標準的なFAT12フォーマットフロッピーディスクのための記述
@@ -66,14 +64,6 @@ next:
 		ADD		CL,1
 		CMP		CL,18
 		JBE		readloop
-		MOV		CL,1
-		ADD		DH,1
-		CMP		DH,2
-		JB		readloop
-		MOV		DH,0
-		ADD		CH,1
-		CMP		CH,CYLS
-		JB		readloop
 
 ; 読み終わったけどとりあえずやることないので寝る
 
@@ -100,13 +90,13 @@ putloop:
 		JMP		putloop
 msg1:
 		DB		0x0a, 0x0a		; 改行を2つ
-		DB		"success"
+		DB		"hello tebasaki"
 		DB		0x0a			; 改行
 		DB		0
 
 msg:
 		DB		0x0a, 0x0a		; 改行を2つ
-		DB		"load error"
+		DB		"load error, yeah"
 		DB		0x0a			; 改行
 		DB		0
 
