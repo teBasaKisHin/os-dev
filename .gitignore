@@ -1,1 +1,5 @@
 sample
+*.bin
+*.lst
+*.img
+*.sys

@@ -13,19 +13,17 @@ default :
 
 # ファイル生成規則
 
-ipl10.bin : ipl10.nas Makefile
-	$(NASK) ipl10.nas ipl10.bin ipl10.lst
+ipl.bin : ipl.nas Makefile
+	$(NASK) ipl.nas ipl.bin ipl.lst
 
-haribote.sys : haribote.nas Makefile
-	$(NASK) haribote.nas haribote.sys haribote.lst
-
-haribote.img : ipl10.bin haribote.sys Makefile
+haribote.img : ipl.bin Makefile
 	$(EDIMG)   imgin:../z_tools/fdimg0at.tek \
-		wbinimg src:ipl10.bin len:512 from:0 to:0 \
-		copy from:haribote.sys to:@: \
-		imgout:haribote.img
+		wbinimg src:ipl.bin len:512 from:0 to:0   imgout:haribote.img
 
 # コマンド
+
+asm :
+	$(MAKE) ipl.bin
 
 img :
 	$(MAKE) haribote.img
@@ -40,10 +38,8 @@ install :
 	$(IMGTOL) w a: haribote.img
 
 clean :
-	-$(DEL) ipl10.bin
-	-$(DEL) ipl10.lst
-	-$(DEL) haribote.sys
-	-$(DEL) haribote.lst
+	-$(DEL) ipl.bin
+	-$(DEL) ipl.lst
 
 src_only :
 	$(MAKE) clean
