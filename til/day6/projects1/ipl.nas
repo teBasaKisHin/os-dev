@@ -36,12 +36,11 @@ entry:
 
 ; ディスクを読む
 
-		MOV		AX,0x0820
+		MOV		AX,0x08200
 		MOV		ES,AX
 		MOV		CH,0			; シリンダ0
 		MOV		DH,0			; ヘッド0
 		MOV		CL,2			; セクタ2
-
 		MOV		AH,0x02			; AH=0x02 : ディスク読み込み
 		MOV		AL,1			; 1セクタ
 		MOV		BX,0
@@ -68,11 +67,10 @@ putloop:
 		JMP		putloop
 msg:
 		DB		0x0a, 0x0a		; 改行を2つ
-		DB		"load error"
+		DB		"load error, yeah"
 		DB		0x0a			; 改行
 		DB		0
 
 		RESB	0x7dfe-$		; 0x7dfeまでを0x00で埋める命令
 
 		DB		0x55, 0xaa
-
