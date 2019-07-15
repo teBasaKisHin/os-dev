@@ -4,10 +4,10 @@ INCPATH	 = ../z_tools/haribote/
 MAKE 	 = $(TOOLPATH)make.exe -r
 NASK 	 = $(TOOLPATH)nask.exe
 CC1		 = $(TOOLPATH)cc1.exe -I$(INCPATH) -Os -Wall -quiet
-GAS2NASK = $(TOOLPATH)obj2bim.exe -a
+GAS2NASK = $(TOOLPATH)gas2nask.exe -a
 OBJ2BIM	 = $(TOOLPATH)obj2bim.exe
 BIM2HRB	 = $(TOOLPATH)bim2hrb.exe
-RULEFILE = $(TOOLPATH)haribote/haribote.RULEFILE
+RULEFILE = $(TOOLPATH)haribote/haribote.rul
 EDIMG 	 = $(TOOLPATH)edimg.exe
 IMGTOL 	 = $(TOOLPATH)imgtol.com
 COPY 	 = copy
@@ -27,15 +27,15 @@ asmhead.bin: asmhead.nas Makefile
 	$(NASK) asmhead.nas asmhead.bin asmhead.lst
 
 bootpack.gas: bootpack.c Makefile
-	$(CC1) -o bootpack.gas bootpack.cc1
+	$(CC1) -o bootpack.gas bootpack.c
 
 bootpack.nas: bootpack.gas Makefile
 	$(GAS2NASK) bootpack.gas bootpack.nas
 
-haribote.obj : haribote.nas Makefile
-	$(NASK) haribote.nas haribote.sys haribote.lst
+bootpack.obj : bootpack.nas Makefile
+	$(NASK) bootpack.nas bootpack.obj bootpack.lst
 
-haribote.img : ipl10.bin haribote.sys Makefile
+bootpack.bim : bootpack.obj Makefile
 	$(OBJ2BIM) @$(RULEFILE) out:bootpack.bim stack:3136k map:bootpack.map \
 		bootpack.obj
 
@@ -46,7 +46,7 @@ haribote.sys: asmhead.bin bootpack.hrb Makefile
 	copy /B asmhead.bin+bootpack.hrb haribote.sys
 
 haribote.img: ipl10.bin haribote.sys Makefile
-	$(EDIMG)	imgin:../z_tools/fdimage0.tek \
+	$(EDIMG)	imgin:../z_tools/fdimg0at.tek \
 		wbinimg src:ipl10.bin len:512 from:0 to:0 \
 		copy from:haribote.sys to:@: \
 		imgout:haribote.img
@@ -67,14 +67,14 @@ install :
 
 clean :
 	-$(DEL) *.bin
-	-$(DEL) *lst
+	-$(DEL) *.lst
 	-$(DEL) *.gas
 	-$(DEL) *.obj
 	-$(DEL) bootpack.nas
 	-$(DEL) bootpack.map
 	-$(DEL) bootpack.bim
 	-$(DEL) bootpack.hrb
-	-$(DEL) bootpack.sys
+	-$(DEL) haribote.sys
 
 src_only :
 	$(MAKE) clean

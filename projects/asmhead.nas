@@ -25,9 +25,9 @@ VRAM	EQU		0x0ff8
 
 ; キーボードの状態をメモ
 
-	MOV		AH,0x02
-	INT		0x16
-	MOV		[LEDS],AL
+		MOV		AH,0x02
+		INT		0x16
+		MOV		[LEDS],AL
 
 ; なんかしないといけないもの
 
@@ -38,17 +38,17 @@ VRAM	EQU		0x0ff8
 
 		CLI
 
-		CALL	waitkdbout
+		CALL	waitkbdout
 		MOV		AL,0xd1
 		OUT		0x64,AL
-		CALL	waitkdbout
+		CALL	waitkbdout
 		MOV		AL,0xdf
 		OUT		0x60,AL
-		CALL	waitkdbout
+		CALL	waitkbdout
 
 ; プロテクトモード移行
 
-[INSTRSET "i486p]
+[INSTRSET "i486p"]
 
 		LGDT	[GDTR0]
 		MOV		EAX,CR0
@@ -104,16 +104,16 @@ skip:
 		MOV		ESP,[EBX+12]
 		JMP		DWORD 2*8:0x0000001b
 
-waitkdbout:
+waitkbdout:
 		IN		AL,0x64
 		AND		AL,0x02
-		JNZ		waitkdbout
+		JNZ		waitkbdout
 		RET
 
 memcpy:
 		MOV		EAX,[ESI]
 		ADD		ESI,4
-		MOV		[ESI],EAX
+		MOV		[EDI],EAX
 		ADD		EDI,4
 		SUB		ECX,1
 		JNZ		memcpy
