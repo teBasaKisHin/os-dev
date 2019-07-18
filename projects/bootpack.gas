@@ -9,7 +9,8 @@ _HariMain:
 	pushl	%ebx
 	movl	$655360, %ebx
 L6:
-	pushl	$224
+	movzbl	%bl,%eax
+	pushl	%eax
 	pushl	%ebx
 	incl	%ebx
 	call	_write_mem8
