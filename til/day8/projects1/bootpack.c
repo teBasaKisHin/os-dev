@@ -6,7 +6,7 @@ void HariMain(void)
     int i;
 
     for(i = 0xa0000; i <= 0xaffff; i++) {
-        write_mem8(i, 224);
+        write_mem8(i, 12);
     }
 
 fin:

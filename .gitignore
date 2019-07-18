@@ -3,6 +3,8 @@ sample
 *.lst
 *.img
 *.sys
-*.nas
 *.bim
 *.hrb
+*.obj
+*.map
+*.gas
