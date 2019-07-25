@@ -27,4 +27,7 @@
 
 > 0xa0000 + x + y * 320
 
+# windowsライクな画面を作る
+
+`boxfill8()`を使えばwindowsみたいなUIを作れよ
 
