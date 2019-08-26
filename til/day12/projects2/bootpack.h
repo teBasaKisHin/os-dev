@@ -1,10 +1,10 @@
 /* asmhead.nas */
 struct BOOTINFO { /* 0x0ff0-0x0fff */
-	char cyls; /* ?u?[?g?Z?N?^??????�f?B?X?N??????? */
-	char leds; /* ?u?[?g????L?[?{?[?h??LED???? */
-	char vmode; /* ?r?f?I???[?h  ???r?b?g?J???[?? */
+	char cyls; /* �u�[�g�Z�N�^�͂ǂ��܂Ńf�B�X�N��ǂ񂾂̂� */
+	char leds; /* �u�[�g���̃L�[�{�[�h��LED�̏�� */
+	char vmode; /* �r�f�I���[�h  ���r�b�g�J���[�� */
 	char reserve;
-	short scrnx, scrny; /* ?????x */
+	short scrnx, scrny; /* ��ʉ𑜓x */
 	char *vram;
 };
 #define ADR_BOOTINFO	0x00000ff0
@@ -23,16 +23,6 @@ void load_idtr(int limit, int addr);
 void asm_inthandler21(void);
 void asm_inthandler27(void);
 void asm_inthandler2c(void);
-
-// fifo.c
-struct FIFO8 {
-	unsigned char *buf;
-	int p, q, size, free, flags;
-};
-void fifo8_init(struct FIFO8 *fifo, int size, unsigned char *buf);
-int fifo8_put(struct FIFO8 *fifo, unsigned char data);
-int fifo8_get(struct FIFO8 *fifo);
-int fifo8_status(struct FIFO8 *fifo);
 
 /* graphic.c */
 void init_palette(void);
@@ -86,6 +76,10 @@ void set_gatedesc(struct GATE_DESCRIPTOR *gd, int offset, int selector, int ar);
 #define AR_INTGATE32	0x008e
 
 /* int.c */
+struct KEYBUF {
+	unsigned char data[32];
+	int next;
+};
 void init_pic(void);
 void inthandler21(int *esp);
 void inthandler27(int *esp);
