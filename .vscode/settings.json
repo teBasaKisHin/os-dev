@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "apilib.h": "c",
+        "bootpack.h": "c"
+    }
+}
